@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * 告诉spring 这个一个远程服务 调用远程客户端 gulimall-coupon 调用哪个写哪个
+ *声明式的远程服务调用！！！
  */
 @FeignClient("gulimall-coupon")
 public interface CouponFeiService {
