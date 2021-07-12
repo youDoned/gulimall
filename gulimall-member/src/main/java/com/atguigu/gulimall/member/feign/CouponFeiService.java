@@ -14,7 +14,7 @@ public interface CouponFeiService {
     /**
      * 完整路径+方法
      * feign去服务注册中心找 gulimall-coupon 里面的 /coupon/coupon/member/list
-     * 大概就是这个意思
+     * 大概就是这个意思吧
      */
 
     @RequestMapping("/coupon/coupon/member/list")
