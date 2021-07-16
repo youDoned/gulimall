@@ -1,0 +1,30 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: test_route
+          uri: https://www.baidu.com
+          predicates:
+            - Query=url,baidu
+        - id: blog_route
+          uri: http://ylfshare.xyz
+          predicates:
+            - Query=url,ylfshare
+        - id: product_route
+          uri: lb://gulimall-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+        - id: admin_route
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*),/renren-fast/$\{segment}
+
+
+#路由路径重写
+# http://localhost:88/api/captcha.jpg       http://localhost:8080/renren-fast/captcha.jpg
+
+#http://localhost:88/api/product/category//list/tree http://localhost:10000/product/category//list/tree
