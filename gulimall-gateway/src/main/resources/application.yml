@@ -2,18 +2,30 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: test_route
-          uri: https://www.baidu.com
-          predicates:
-            - Query=url,baidu
-        - id: blog_route
-          uri: http://ylfshare.xyz
-          predicates:
-            - Query=url,ylfshare
+#        - id: test_route
+#          uri: https://www.baidu.com
+#          predicates:
+#            - Query=url,baidu
+#        - id: blog_route
+#          uri: http://ylfshare.xyz
+#          predicates:
+#            - Query=url,ylfshare
         - id: product_route
           uri: lb://gulimall-product
           predicates:
             - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+        - id: third_party_route
+          uri: lb://gulimall-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty/(?<segment>/?.*),/$\{segment}
+        - id: member_route
+          uri: lb://gulimall-member
+          predicates:
+            - Path=/api/member/**
           filters:
             - RewritePath=/api/(?<segment>/?.*),/$\{segment}
         - id: admin_route
@@ -24,7 +36,8 @@ spring:
             - RewritePath=/api/(?<segment>/?.*),/renren-fast/$\{segment}
 
 
-#路由路径重写
+#错误第二次 被/api/**给路由走了  注意全局位置关系  ！！！！！！广的放下面
+#路由路径重写  复制的时候 注意位置  上下层关系
 # http://localhost:88/api/captcha.jpg       http://localhost:8080/renren-fast/captcha.jpg
 
 #http://localhost:88/api/product/category//list/tree http://localhost:10000/product/category//list/tree
